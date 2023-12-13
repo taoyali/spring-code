@@ -3,6 +3,7 @@ package com.tyl.controller;
 import com.tyl.pojo.Result;
 import com.tyl.pojo.User;
 import com.tyl.service.UserService;
+import com.tyl.utils.JwtUtil;
 import com.tyl.utils.Md5Util;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
@@ -11,6 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -41,6 +45,10 @@ public class UserController {
             return Result.error("用户名或密码错误");
         }
 
-        return Result.success("登录成功: jwt token 令牌");
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("username", user.getUsername());
+        claims.put("userId", user.getId());
+        String token = JwtUtil.genToken(claims);
+        return Result.success(token);
     }
 }
