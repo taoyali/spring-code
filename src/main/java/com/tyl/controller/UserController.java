@@ -5,13 +5,11 @@ import com.tyl.pojo.User;
 import com.tyl.service.UserService;
 import com.tyl.utils.JwtUtil;
 import com.tyl.utils.Md5Util;
+import com.tyl.utils.ThreadLocalUtil;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,5 +48,13 @@ public class UserController {
         claims.put("userId", user.getId());
         String token = JwtUtil.genToken(claims);
         return Result.success(token);
+    }
+
+    @GetMapping("/userInfo")
+    public Result<User> userInfo(@RequestHeader(name = "Authorization") String token) {
+        Map<String, Object> map = ThreadLocalUtil.get();
+        String username = (String) map.get("username");
+        User user = userService.findByUserName(username);
+        return Result.success(user);
     }
 }
