@@ -2,6 +2,7 @@ package com.tyl.interceptors;
 
 import com.tyl.pojo.Result;
 import com.tyl.utils.JwtUtil;
+import com.tyl.utils.ThreadLocalUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,8 @@ public class LoginInterceptor implements HandlerInterceptor {
         String token = request.getHeader(tokenKey);
         try {
             Map<String, Object> claims = JwtUtil.parseToken(token);
+            // 将业务数据存储到ThreadLocal中
+            ThreadLocalUtil.set(claims);
             // 放行
             return true;
         } catch (Exception e) {
