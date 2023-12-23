@@ -4,10 +4,13 @@ import com.tyl.mapper.UserMapper;
 import com.tyl.pojo.User;
 import com.tyl.service.UserService;
 import com.tyl.utils.Md5Util;
+import com.tyl.utils.ThreadLocalUtil;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 import static com.tyl.utils.Md5Util.getMD5String;
 
@@ -32,5 +35,12 @@ public class UserServiceImpl implements UserService {
     public void update(User user) {
         user.setUpdateTime(LocalDateTime.now());
         userMapper.update(user);
+    }
+
+    @Override
+    public void updateAvatar(String avatar) {
+        Map<String, Object> map = ThreadLocalUtil.get();
+        Integer id = (Integer) map.get("userId");
+        userMapper.updateAvatar(avatar, id);
     }
 }

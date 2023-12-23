@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import net.minidev.json.annotate.JsonIgnore;
+import org.hibernate.validator.constraints.URL;
 
 import java.time.LocalDateTime;
 
@@ -28,6 +29,7 @@ public class User {
     @Email
     private String email;
 
+    @URL
     private String userPic;
 
     private LocalDateTime createTime;

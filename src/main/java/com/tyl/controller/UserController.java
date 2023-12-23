@@ -8,6 +8,8 @@ import com.tyl.utils.Md5Util;
 import com.tyl.utils.ThreadLocalUtil;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
+import org.apache.ibatis.annotations.Update;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,6 +63,12 @@ public class UserController {
     @PutMapping("/update")
     public Result update(@RequestBody User user) {
         userService.update(user);
+        return Result.success();
+    }
+
+    @PatchMapping("updateAvatar")
+    public Result updateAvatar(@RequestParam @URL String avatar) {
+        userService.updateAvatar(avatar);
         return Result.success();
     }
 }
