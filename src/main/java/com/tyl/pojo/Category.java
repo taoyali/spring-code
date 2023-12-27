@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class Category {
 
     @NotNull(groups = Update.class)
-    private String id;
+    private Integer id;
 
     @NotEmpty
     private String categoryName;

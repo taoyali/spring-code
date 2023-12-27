@@ -4,8 +4,9 @@ server:
 
 spring:
   profiles:
-    active: mini
-#    active: hackintosh
+#    active: mini
+    active: hackintosh
+
 
 mybatis:
   configuration:
