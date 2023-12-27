@@ -6,3 +6,7 @@ spring:
   profiles:
     active: mini
 #    active: hackintosh
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true  #开启驼峰命名和下划线命名的自动转换
